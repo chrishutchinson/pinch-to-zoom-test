@@ -1,0 +1,15 @@
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
+#scale-element {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+#scale-element.transitions, #gesture-area.transitions {
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+}

@@ -1,0 +1,19 @@
+{
+  "name": "pinch-to-zoom",
+  "version": "0.0.1",
+  "authors": [
+    "Chris Hutchinson <chris_hutchinson@me.com>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "interact": "~1.2.4"
+  }
+}
