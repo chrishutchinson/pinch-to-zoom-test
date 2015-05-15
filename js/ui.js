@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       scaleElement.style.webkitTransform =
       scaleElement.style.transform =
-        'scale(' + scale + ')';
+        'scale(' + scale + ') translate(' + (scaleElement.getAttribute('data-x')*scale) + 'px, ' + (scaleElement.getAttribute('data-y')*scale) + 'px)';
+      scaleElement.setAttribute('data-scale', scale);
     },
     onend: function (event) {
       scaleElement.classList.add('reset');
@@ -39,14 +40,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
                      event.dy * event.dy)|0) + 'px');
     }
   }).on('doubletap', function (event) {
-    if(hasZoomed) {
+    if(scale !== 1) {
       scale = 1;
-      gestureArea.classList.add('transitions');
-      gestureArea.style.webkitTransform =
-      gestureArea.style.transform =
+      scaleElement.classList.add('transitions');
+      scaleElement.style.webkitTransform =
+      scaleElement.style.transform =
         'translate(0px, 0px)';
-      gestureArea.setAttribute('data-x', 0);
-      gestureArea.setAttribute('data-y', 0);
+      scaleElement.setAttribute('data-x', 0);
+      scaleElement.setAttribute('data-y', 0);
     } else {
       scale = scale * (2);
     }
@@ -55,19 +56,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
     scaleElement.classList.add('transitions');
     scaleElement.style.webkitTransform =
     scaleElement.style.transform =
-      'scale(' + scale + ')';
+      'scale(' + scale + ') translate(' + (scaleElement.getAttribute('data-x') * scale) + 'px, ' + (scaleElement.getAttribute('data-y') * scale) + 'px)';
+    scaleElement.setAttribute('data-scale', scale);
   });
 
   function dragMoveListener (event) {
     var target = event.target,
         // keep the dragged position in the data-x/data-y attributes
         x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy,
+        scale = (parseFloat(target.getAttribute('data-scale')) || 1);
+
 
     // translate the element
     target.style.webkitTransform =
     target.style.transform =
-      'translate(' + x + 'px, ' + y + 'px)';
+      'scale(' + scale + ') translate(' + (x/scale) + 'px, ' + (y/scale) + 'px)';
 
     // update the posiion attributes
     target.setAttribute('data-x', x);
